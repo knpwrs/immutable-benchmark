@@ -40,6 +40,7 @@ const initialState = {
 };
 
 const runSuite = (name, fn) => {
+  global.gc();
   console.log(name);
   const suite = new Suite();
   fn(name, suite);
