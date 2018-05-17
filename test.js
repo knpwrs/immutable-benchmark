@@ -10,24 +10,34 @@ import pc from 'pass-context';
 
 const initialState = {
   foo: 0,
+  bar: 'a',
   turtle: {
     foo: 1,
+    bar: 'b',
     turtle: {
       foo: 2,
+      bar: 'c',
       turtle: {
         foo: 3,
+        bar: 'd',
         turtle: {
           foo: 4,
+          bar: 'e',
           turtle: {
             foo: 5,
+            bar: 'f',
             turtle: {
               foo: 6,
+              bar: 'g',
               turtle: {
                 foo: 7,
+                bar: 'h',
                 turtle: {
                   foo: 8,
+                  bar: 'i',
                   turtle: {
                     foo: 9,
+                    bar: 'j',
                   },
                 },
               },
