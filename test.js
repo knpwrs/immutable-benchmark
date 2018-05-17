@@ -78,6 +78,15 @@ runSuite('set property', (name, suite) => {
       draft.foo++;
     }));
   });
+
+  const nilla = `${name} (vanilla)`;
+  suite.add(nilla, (name, suite) => {
+    const newState = {
+      ...initialState,
+      foo: initialState.foo + 1,
+    };
+    check(nilla, initialState, newState);
+  });
 });
 
 runSuite('set deep property', (name, suite) => {
@@ -107,5 +116,41 @@ runSuite('set deep property', (name, suite) => {
     check(immer, initialState, produce(initialState, (draft) => {
       draft.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.foo++;
     }));
+  });
+
+  const nilla = `${name} (vanilla)`;
+  suite.add(nilla, (name, suite) => {
+    const newState = {
+      ...initialState,
+      turtle: {
+        ...initialState.turtle,
+        turtle: {
+          ...initialState.turtle.turtle,
+          turtle: {
+            ...initialState.turtle.turtle.turtle,
+            turtle: {
+              ...initialState.turtle.turtle.turtle.turtle,
+              turtle: {
+                ...initialState.turtle.turtle.turtle.turtle.turtle,
+                turtle: {
+                  ...initialState.turtle.turtle.turtle.turtle.turtle.turtle,
+                  turtle: {
+                    ...initialState.turtle.turtle.turtle.turtle.turtle.turtle.turtle,
+                    turtle: {
+                      ...initialState.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle,
+                      turtle: {
+                        ...initialState.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle,
+                        foo: initialState.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.foo + 1,
+                      },
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    };
+    check(nilla, initialState, newState);
   });
 });
