@@ -49,7 +49,7 @@ const runSuite = (name, fn) => {
   });
   suite.on('complete', pc((that, event) => {
     console.log(`Fastest is '${that.filter('fastest').map('name')}'`);
-    console.log('\n');
+    console.log();
   }));
   suite.run();
 };
