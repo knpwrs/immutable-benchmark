@@ -38,6 +38,7 @@ const initialState = {
     }
   },
 };
+initialState.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle = initialState;
 
 const runSuite = (name, fn) => {
   global.gc();
