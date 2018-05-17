@@ -55,7 +55,13 @@ const runSuite = (name, fn) => {
 };
 
 runSuite('set property', (name, suite) => {
-  const check = (name, newState) => {
+  const check = (name, oldState, newState) => {
+    if (oldState === newState) {
+      throw new Error(`SAME STATE OBJECT: ${name}`);
+    }
+    if (oldState.foo === 1) {
+      throw new Error(`MUTATED OLD STATE: ${name}`);
+    }
     if (newState.foo !== 1) {
       throw new Error(`INCORRECT RESULT: ${name}`);
     }
@@ -63,19 +69,25 @@ runSuite('set property', (name, suite) => {
 
   const ramda = `${name} (ramda)`;
   suite.add(ramda, () => {
-    check(ramda, over(lensProp('foo'), inc, initialState));
+    check(ramda, initialState, over(lensProp('foo'), inc, initialState));
   });
 
   const immer = `${name} (immer)`;
   suite.add(immer, () => {
-    check(immer, produce(initialState, (draft) => {
+    check(immer, initialState, produce(initialState, (draft) => {
       draft.foo++;
     }));
   });
 });
 
 runSuite('set deep property', (name, suite) => {
-  const check = (name, newState) => {
+  const check = (name, oldState, newState) => {
+    if (oldState === newState) {
+      throw new Error(`SAME STATE OBJECT: ${name}`);
+    }
+    if (oldState.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.foo === 10) {
+      throw new Error(`MUTATED OLD STATE: ${name} (ramda)`);
+    }
     if (newState.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.foo !== 10) {
       throw new Error(`INCORRECT RESULT: ${name} (ramda)`);
     }
@@ -83,7 +95,7 @@ runSuite('set deep property', (name, suite) => {
 
   const ramda = `${name} (ramda)`;
   suite.add(ramda, () => {
-    check(ramda, over(
+    check(ramda, initialState, over(
       lensPath(['turtle', 'turtle', 'turtle', 'turtle', 'turtle', 'turtle', 'turtle', 'turtle', 'turtle', 'foo']),
       inc,
       initialState,
@@ -92,7 +104,7 @@ runSuite('set deep property', (name, suite) => {
 
   const immer = `${name} (immer)`;
   suite.add(immer, () => {
-    check(immer, produce(initialState, (draft) => {
+    check(immer, initialState, produce(initialState, (draft) => {
       draft.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.turtle.foo++;
     }));
   });
